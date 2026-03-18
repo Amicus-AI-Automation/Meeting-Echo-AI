@@ -1,0 +1,33 @@
+{
+  "meeting_id": "ES1697069FC07",
+  "source_file": "ES2003a.Mix-Headset.wav",
+  "file_path": "D:\\customapps\\new test\\MeetingRAG\\backend\\uploads\\1773824169423-e4397fa2-8151-414f-b5e2-f9f545f658e0.wav",
+  "meeting_info": {
+    "title": "ppt discussion",
+    "date": "2026-03-17T00:00:00.000Z",
+    "duration_seconds": 71,
+    "language": "en"
+  },
+  "participants": [
+    {
+      "user_id": "6b176107-1868-406b-b1b0-2662ca35869c",
+      "name": "nandini_singh@amicusglobal.com"
+    },
+    {
+      "user_id": "a1b44ca3-a74c-43a4-b108-3dcc133c22eb",
+      "name": "Aditya_verma@amicusglobal.com"
+    }
+  ],
+  "access_control": {
+    "allowed_users": [
+      "swapnil_singh@amicusglobal.com"
+    ]
+  },
+  "ingestion_info": {
+    "uploaded_by": "swapnil_singh@amicusglobal.com",
+    "uploaded_at": "2026-03-18T08:56:09.706Z",
+    "pipeline_version": "v1_whisper_only"
+  },
+  "createdAt": "2026-03-18T08:56:09.706Z",
+  "updatedAt": "2026-03-18T08:56:09.706Z"
+}
