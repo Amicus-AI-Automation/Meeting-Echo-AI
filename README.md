@@ -1,137 +1,146 @@
 # MeetingRAG - Meeting Intelligence Assistant
 
-A full-stack web application that enables users to upload meeting recordings and ask intelligent questions about them using a Chat UI. Built with React frontend and Node.js/Express backend with MongoDB persistence.
+A full-stack web application that enables users to upload meeting recordings and ask intelligent questions about them using a Chat UI. Built with React 19 frontend and Node.js/Express backend, secured with **Azure Entra ID (Microsoft SSO)** and role-based access control.
 
 ## 📋 Features
 
-- **Email-based OTP Authentication** - Secure login via one-time passwords
-- **Meeting Upload** - Upload meeting files (MP4, WAV) with participant information
+- **Azure Entra ID Authentication** - Microsoft SSO login via MSAL (no passwords required)
+- **Role-Based Access Control** - Admin and User roles; Admins upload, Users view
+- **Meeting Upload** - Admins upload meeting files (MP4, WAV, MP3, up to 500MB) with participant info
+- **Participant Access Control** - Meetings visible only to assigned participants
 - **Chat Interface** - Ask questions about uploaded meetings
-- **Real-time Notifications** - Get email notifications for meetings
-- **Persistent Storage** - All meetings and user data stored in MongoDB
-- **Production-Ready** - Error handling, validation, CORS, rate limiting
+- **JSON File Storage** - Lightweight persistence without a database dependency
+- **JWT Token Validation** - Backend verifies Azure-issued ID tokens via JWKS endpoint
 
 ## 📁 Project Structure
 
 ```
 MeetingRAG/
-├── frontend/                 # React application
+├── frontend/                     # React 19 application
+│   ├── public/
+│   │   └── index.html
 │   ├── src/
-│   │   ├── components/      # Reusable UI components
-│   │   │   ├── Login.js
-│   │   │   ├── OTPVerify.js
-│   │   │   ├── ChatUI.js
-│   │   │   ├── Sidebar.js
-│   │   │   ├── UploadMeeting.js
-│   │   │   └── [CSS files]
+│   │   ├── components/
+│   │   │   ├── ChatUI.js         # Chat interface for querying meetings
+│   │   │   ├── ChatUI.css
+│   │   │   ├── Sidebar.js        # Navigation sidebar with role badge & upload button
+│   │   │   ├── Sidebar.css
+│   │   │   ├── UploadMeeting.js  # Meeting file upload form (Admin only)
+│   │   │   └── UploadMeeting.css
 │   │   ├── pages/
-│   │   │   └── Dashboard.js
+│   │   │   ├── LoginPage.js      # Role selection + Microsoft SSO login
+│   │   │   ├── LoginPage.css
+│   │   │   ├── Dashboard.js      # Main app shell after authentication
+│   │   │   └── Dashboard.css
 │   │   ├── services/
-│   │   │   └── api.js       # Axios configuration with Bearer auth
-│   │   ├── App.js
+│   │   │   └── api.js            # Axios instance with auth + role headers
+│   │   ├── authConfig.js         # MSAL PublicClientApplication config
+│   │   ├── App.js                # Root with MsalProvider + auth routing
 │   │   └── index.js
 │   ├── package.json
-│   └── .env
+│   └── .env                      # REACT_APP_AZURE_TENANT_ID, REACT_APP_AZURE_CLIENT_ID
 │
-└── backend/                  # Express.js API
-    ├── models/              # MongoDB schemas
-    │   ├── User.js
-    │   └── Meeting.js
-    ├── routes/              # API endpoints
-    │   ├── auth.js         # OTP login endpoints
-    │   └── meeting.js      # Meeting management endpoints
-    ├── controllers/         # Business logic
-    │   ├── authController.js
-    │   └── meetingController.js
+└── backend/                      # Express.js API (port 5000)
+    ├── controllers/
+    │   ├── authController.js     # OTP auth (legacy, kept for reference)
+    │   └── meetingController.js  # Upload, list, query meetings
     ├── middleware/
-    │   └── auth.js         # JWT verification
+    │   ├── auth.js               # Legacy JWT middleware
+    │   └── entraAuth.js          # Azure Entra ID token validation via JWKS
+    ├── routes/
+    │   ├── auth.js               # /send-otp, /verify-otp (legacy)
+    │   └── meeting.js            # /upload-meeting, /meetings, /query
+    ├── services/
+    │   └── jsonStorage.js        # JSON file persistence layer
     ├── config/
-    │   ├── mongodb.js
-    │   └── email.js
-    ├── uploads/            # Meeting file storage
-    ├── server.js
+    │   ├── mongodb.js            # MongoDB config (not actively used)
+    │   └── email.js              # Nodemailer config
+    ├── data/                     # JSON data files (meetings, users)
+    ├── uploads/                  # Uploaded meeting files
+    ├── server.js                 # Express entry point, CORS, routes
     ├── package.json
-    ├── .env
-    └── README.md
+    └── .env                      # AZURE_TENANT_ID, AZURE_CLIENT_ID
 ```
+
+## 🔐 Authentication Architecture
+
+Authentication uses **Azure Entra ID (Microsoft SSO)** with the MSAL library. No passwords or OTPs are required.
+
+### Login Flow
+1. User opens the app → lands on **LoginPage**
+2. User selects role: **Admin** or **User**
+3. App calls `instance.loginPopup()` → Microsoft sign-in popup opens
+4. After sign-in, app calls `acquireTokenSilent()` to get the ID token
+5. `idToken`, `userEmail`, and `userRole` are saved to `localStorage`
+6. App detects the token in localStorage → redirects to **Dashboard**
+
+### Token Validation (Backend)
+- Every API request includes `Authorization: Bearer <idToken>` and `X-User-Role: admin|user` headers
+- Backend fetches Microsoft's JWKS public keys (`login.microsoftonline.com/<tenant>/discovery/v2.0/keys`)
+- Token is verified with RS256 signature using `jwk-to-pem` for JWK → PEM conversion
+- JWKS keys are cached for 1 hour to avoid repeated fetches
+
+### Role-Based Access
+| Role | Permissions |
+|------|------------|
+| Admin | Upload meetings, view all meetings, query meetings |
+| User | View meetings they are a participant of, query meetings |
+
+The role is sent from the frontend via `X-User-Role` header. The backend accepts it if the Entra ID token is valid.
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js (v14+)
-- npm or yarn
-- MongoDB (local or MongoDB Atlas)
-- Gmail account (for OTP emails) or compatible email service
+- Node.js v18+
+- An **Azure Entra ID** (formerly Azure AD) app registration
 
-### 1. Clone & Setup
+### 1. Azure App Registration
 
-```bash
-# Clone the repository (if applicable)
-git clone <repo-url>
-cd MeetingRAG
-
-# Install frontend dependencies
-cd frontend
-npm install
-
-# Install backend dependencies
-cd ../backend
-npm install
-```
+1. Go to [Azure Portal → App registrations](https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade)
+2. Click **New registration**
+3. Name: `MeetingRAG` | Account type: Single tenant (or multi-tenant as needed)
+4. Redirect URI: **Single-page application (SPA)** → `http://localhost:3000`
+5. After creation, note your **Application (client) ID** and **Directory (tenant) ID**
+6. Under **Authentication**, ensure `Access tokens` and `ID tokens` are both checked
 
 ### 2. Configure Environment Variables
 
-**Backend (.env)**
+**Backend** — create `backend/.env`:
+```env
+AZURE_TENANT_ID=your-tenant-id
+AZURE_CLIENT_ID=your-client-id
+PORT=5000
+```
+
+**Frontend** — create `frontend/.env`:
+```env
+REACT_APP_AZURE_TENANT_ID=your-tenant-id
+REACT_APP_AZURE_CLIENT_ID=your-client-id
+REACT_APP_API_URL=http://localhost:5000
+```
+
+### 3. Install Dependencies
+
 ```bash
+# Backend
 cd backend
+npm install
 
-# Copy .env.example to .env
-cp .env.example .env
-
-# Edit .env with your values:
-# - MONGODB_URI (local or MongoDB Atlas)
-# - EMAIL_USER and EMAIL_PASSWORD (Gmail app password)
-# - JWT_SECRET (any secure string)
-```
-
-**Frontend (.env)**
-```bash
+# Frontend
 cd ../frontend
-
-# Already configured with REACT_APP_API_URL=http://localhost:5000
-# Modify if backend runs on different port
+npm install
 ```
 
-### 3. Setup Email Service (Gmail)
+### 4. Start Servers
 
-1. Go to [Gmail App Passwords](https://myaccount.google.com/apppasswords)
-2. Select "Mail" and "Windows Computer"
-3. Generate app password → 16 character password
-4. Paste into backend `.env` as `EMAIL_PASSWORD`
-
-### 4. Setup MongoDB
-
-**Option A: Local MongoDB**
-```bash
-# Install MongoDB
-# Default: mongodb://localhost:27017/meeting-rag
-```
-
-**Option B: MongoDB Atlas (Recommended)**
-1. Create free account at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-2. Create cluster → Get connection string
-3. Update `MONGODB_URI` in backend `.env`
-
-### 5. Start Servers
-
-**Terminal 1 - Backend**
+**Terminal 1 — Backend**
 ```bash
 cd backend
 npm run dev
 # Runs on http://localhost:5000
 ```
 
-**Terminal 2 - Frontend**
+**Terminal 2 — Frontend**
 ```bash
 cd frontend
 npm start
@@ -140,63 +149,68 @@ npm start
 
 ## 🔄 User Flow
 
-1. **Login** → User enters email → Backend sends OTP via Gmail
-2. **OTP Verification** → User enters OTP → Backend generates JWT token
-3. **Dashboard** → User sees Chat UI and Sidebar
-4. **Upload Meeting** → User clicks "Upload Meeting" → Upload file + add participants
-5. **Query** → User asks questions → Backend returns answers (placeholder for RAG)
+1. **Login** → Click **Admin** or **User** → Sign in with Microsoft account
+2. **Dashboard** → See role badge in the sidebar (👨‍💼 Admin / 👤 User)
+3. **Upload Meeting** *(Admin only)* → Click Upload → Fill name, add participants, attach file
+4. **View Meetings** → Listed in sidebar; participants see only their meetings
+5. **Query** → Ask a question in the Chat UI → Get an answer from the backend
 
 ## 📡 API Endpoints
 
-### Authentication
-| Method | Endpoint | Body | Response |
-|--------|----------|------|----------|
-| POST | `/send-otp` | `{ email }` | OTP sent |
-| POST | `/verify-otp` | `{ email, otp }` | `{ token }` |
+All endpoints (except legacy auth) require:
+- `Authorization: Bearer <idToken>`
+- `X-User-Role: admin` or `X-User-Role: user`
 
-### Meetings (Requires Bearer token)
-| Method | Endpoint | Body | Response |
-|--------|----------|------|----------|
-| POST | `/upload-meeting` | FormData: `file`, `meetingName`, `participants` | Meeting created |
-| POST | `/query` | `{ query }` | `{ answer }` |
-| GET | `/meetings` | - | List of meetings |
+### Meetings
+| Method | Endpoint | Access | Description |
+|--------|----------|--------|-------------|
+| POST | `/upload-meeting` | Admin only | Upload meeting file + metadata |
+| GET | `/meetings` | All authenticated | List meetings for this user |
+| POST | `/query` | All authenticated | Ask a question about meetings |
+
+### Legacy Auth (kept for reference)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/send-otp` | Send OTP to email |
+| POST | `/verify-otp` | Verify OTP and get JWT |
 
 ## 🧪 Testing the Application
 
-### Test OTP Flow
-```bash
-# 1. Go to http://localhost:3000
-# 2. Enter your email
-# 3. Check Gmail inbox for OTP
-# 4. Enter OTP to verify
-# 5. Should be logged in to Dashboard
-```
+### Test Admin Upload
+1. Open `http://localhost:3000`
+2. Click **Admin** → sign in with your Microsoft account
+3. Dashboard shows `👨‍💼 Admin` badge in sidebar
+4. Click **Upload Meeting** → fill in details and upload a file
+5. Meeting appears in the list
 
-### Test Meeting Upload
-```bash
-# 1. Click "Upload Meeting"
-# 2. Enter meeting name
-# 3. Upload a file (mp4/wav)
-# 4. Add participant emails
-# 5. Click Upload
-# 6. Should see success message
-```
+### Test User Access
+1. Log out and click **User** → sign in
+2. Dashboard shows `👤 User` badge — no upload button
+3. Only meetings where you are listed as a participant are visible
 
-### Test Chat Query
-```bash
-# 1. Type a message in Chat UI
-# 2. Click Send
-# 3. Should receive response from backend
-```
+### Test Chat
+1. Select a meeting from the sidebar
+2. Type a question in the Chat UI
+3. Backend returns a response
 
-## 🛠 Development
+## 🛠 Tech Stack
 
-### Enable Development Email Logging
-In `backend/controllers/authController.js`, OTP codes are logged to console in development mode:
-```
-[DEV] OTP for user@example.com: 123456
-Use this for testing without email setup
-```
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 19, React Router v7, Axios |
+| Auth (frontend) | @azure/msal-browser v3, @azure/msal-react v2 |
+| Backend | Node.js, Express.js |
+| Auth (backend) | jsonwebtoken, jwk-to-pem, axios (JWKS fetch) |
+| Storage | JSON files (via jsonStorage service) |
+| File uploads | Multer (500 MB limit, MP4/WAV/MP3) |
+
+## ⚙️ Key Configuration Notes
+
+- **JWKS caching**: Public keys are cached in memory for 1 hour (`entraAuth.js`)
+- **File size limit**: 500 MB per upload (configurable in `routes/meeting.js`)
+- **Accepted formats**: `.mp4`, `.wav`, `.mp3`
+- **Storage path**: `backend/data/` for JSON, `backend/uploads/` for files
+- **CORS**: Configured for `http://localhost:3000` and `http://localhost:3001`
 
 ### Troubleshooting
 

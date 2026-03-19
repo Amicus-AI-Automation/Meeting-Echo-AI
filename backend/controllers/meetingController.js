@@ -7,9 +7,26 @@ const uploadMeeting = async (req, res) => {
   try {
     const { title, date, durationSeconds, language = "en", participants, allowedUsers } = req.body;
     const email = req.user?.email;
+    const userRoles = req.user?.roles || [];
+    const frontendRole = req.user?.frontendRole || "";
     const file = req.file;
 
     console.log(`📥 Meeting upload request from: ${email}`);
+
+    // Check if user has admin role (from Entra ID or frontend)
+    const isAdmin = userRoles.includes("admin") || frontendRole === "admin";
+    
+    if (!isAdmin) {
+      if (file) fs.unlinkSync(file.path);
+      console.warn(`🚫 Non-admin user ${email} attempted to upload meeting. Entra ID roles: [${userRoles.join(", ")}], Frontend role: ${frontendRole}`);
+      return res.status(403).json({ 
+        message: "Forbidden. Only admins can upload meetings",
+        userRoles: userRoles,
+        frontendRole: frontendRole,
+      });
+    }
+
+    console.log(`✅ Admin user ${email} authorized to upload. Role source: ${frontendRole ? "Frontend" : "Entra ID"}`);
 
     // Validate inputs
     if (!title || !title.trim()) {

@@ -20,25 +20,13 @@ function Dashboard({ onLogout, account }) {
   useEffect(() => {
     const initializeUser = async () => {
       try {
-        // Get user email from account or localStorage
-        const email = accountContext?.username || localStorage.getItem("userEmail") || "";
+        // Get user email from account
+        const email = accountContext?.username || "";
         setUserEmail(email);
-        console.log("👤 User email:", email);
 
         // Get role that user selected on LoginPage (stored in localStorage)
-        const selectedRole = localStorage.getItem("userRole");
-        console.log("📋 Role from localStorage:", selectedRole);
-        
-        if (selectedRole === "admin") {
-          console.log("👨‍💼 Setting as ADMIN");
-          setIsAdmin(true);
-        } else if (selectedRole === "user") {
-          console.log("👤 Setting as USER");
-          setIsAdmin(false);
-        } else {
-          console.log("⚠️ No role found, defaulting to USER");
-          setIsAdmin(false);
-        }
+        const selectedRole = localStorage.getItem("userRole") || "user";
+        setIsAdmin(selectedRole === "admin");
 
         // Fetch meetings
         await fetchMeetings();
@@ -47,26 +35,39 @@ function Dashboard({ onLogout, account }) {
       }
     };
 
-    // Always initialize, don't depend on accountContext
-    initializeUser();
-  }, []);
+    if (accountContext) {
+      initializeUser();
+    }
+  }, [accountContext]);
 
   const fetchMeetings = async () => {
     setLoadingMeetings(true);
     try {
       const token = localStorage.getItem("accessToken");
+      const email = localStorage.getItem("userEmail");
+      const role = localStorage.getItem("userRole");
+      
+      console.log("📤 Fetching meetings - Sending token to backend");
+      console.log("   Email:", email);
+      console.log("   Role:", role);
+      console.log("   Token (first 20 chars):", token?.substring(0, 20) + "...");
       
       if (!token) {
-        console.error("No access token available");
+        console.error("❌ No access token available in localStorage");
         return;
       }
 
       const res = await api.get("/meetings", {
         headers: {
           Authorization: `Bearer ${token}`,
+          "X-User-Email": email,
+          "X-User-Role": role,
         },
       });
 
+      console.log("✅ Backend validated token and returned meetings");
+      console.log("📊 Meetings received:", res.data.meetings?.length || 0);
+      
       if (res.data.meetings && res.data.meetings.length > 0) {
         setMeetings(res.data.meetings);
         setSelectedMeeting(res.data.meetings[0]);
@@ -75,7 +76,13 @@ function Dashboard({ onLogout, account }) {
         setSelectedMeeting(null);
       }
     } catch (err) {
-      console.error("Failed to fetch meetings:", err);
+      console.error("❌ Failed to fetch meetings from backend:", err);
+      if (err.response?.status === 401) {
+        console.error("🔐 Token validation FAILED on backend - Unauthorized");
+        console.error("Backend error:", err.response.data);
+      } else if (err.response?.status === 403) {
+        console.error("🚫 Access forbidden - Check role permissions");
+      }
       setMeetings([]);
     } finally {
       setLoadingMeetings(false);

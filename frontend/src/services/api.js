@@ -9,13 +9,23 @@ const api = axios.create({
   },
 });
 
-// Request interceptor to add Bearer token
+// Request interceptor to add Bearer token and user role
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("accessToken");
+    const userRole = localStorage.getItem("userRole");
+    
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      console.log(`📤 API Request: ${config.method.toUpperCase()} ${config.url}`);
+      console.log(`🔑 Token: ${token.substring(0, 20)}...`);
     }
+    
+    if (userRole) {
+      config.headers["X-User-Role"] = userRole;
+      console.log(`🎭 User Role: ${userRole}`);
+    }
+    
     return config;
   },
   (error) => {

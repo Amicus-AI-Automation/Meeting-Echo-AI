@@ -7,7 +7,7 @@ const {
   queryMeeting,
   getMeetings,
 } = require("../controllers/meetingController");
-const authMiddleware = require("../middleware/auth");
+const { authenticateEntraId, requireRole } = require("../middleware/entraAuth");
 
 const router = express.Router();
 
@@ -38,8 +38,8 @@ const upload = multer({
 });
 
 // Routes
-router.post("/upload-meeting", authMiddleware, upload.single("file"), uploadMeeting);
-router.post("/query", authMiddleware, queryMeeting);
-router.get("/meetings", authMiddleware, getMeetings);
+router.post("/upload-meeting", authenticateEntraId, requireRole(["admin"]), upload.single("file"), uploadMeeting);
+router.post("/query", authenticateEntraId, queryMeeting);
+router.get("/meetings", authenticateEntraId, getMeetings);
 
 module.exports = router;
