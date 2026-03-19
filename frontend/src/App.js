@@ -1,35 +1,51 @@
 import React, { useState, useEffect } from "react";
-import Login from "./components/Login";
-import OTPVerify from "./components/OTPVerify";
+import { useMsal } from "@azure/msal-react";
+import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
 import "./App.css";
 
-function App() {
-  const [step, setStep] = useState("login");
-  const [authenticated, setAuthenticated] = useState(false);
+function AppContent() {
+  const { instance } = useMsal();
+  const [authenticated, setAuthenticated] = useState(
+    () => !!localStorage.getItem("idToken")
+  );
 
-  // Check if user is already authenticated on app load
+  // Keep auth state in sync if another tab logs out
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setAuthenticated(true);
-    }
+    const onStorage = (e) => {
+      if (e.key === "idToken") {
+        setAuthenticated(!!e.newValue);
+      }
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
+  const handleLoginSuccess = () => {
+    setAuthenticated(true);
+  };
+
+  const handleLogout = async () => {
+    localStorage.removeItem("idToken");
     localStorage.removeItem("email");
     localStorage.removeItem("role");
     setAuthenticated(false);
-    setStep("login");
+    // Sign out from Microsoft silently (clears MSAL cache)
+    const accounts = instance.getAllAccounts();
+    if (accounts.length > 0) {
+      await instance.logoutPopup({ account: accounts[0] }).catch(() => {});
+    }
   };
 
   if (!authenticated) {
-    if (step === "login") return <Login setStep={setStep} />;
-    if (step === "otp") return <OTPVerify setAuthenticated={setAuthenticated} setStep={setStep} />;
+    return <LoginPage onLoginSuccess={handleLoginSuccess} />;
   }
 
   return <Dashboard onLogout={handleLogout} />;
+}
+
+function App() {
+  return <AppContent />;
 }
 
 export default App;

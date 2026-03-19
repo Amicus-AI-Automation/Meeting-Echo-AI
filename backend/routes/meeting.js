@@ -9,7 +9,7 @@ const {
   getPipelineStatus,
   deleteMeeting,
 } = require("../controllers/meetingController");
-const authMiddleware = require("../middleware/auth");
+const authMiddleware = require("../middleware/entraAuth");
 
 const router = express.Router();
 

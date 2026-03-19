@@ -4,7 +4,6 @@ const cors = require("cors");
 const path = require("path");
 
 // Import routes
-const authRoutes = require("./routes/auth");
 const meetingRoutes = require("./routes/meeting");
 
 // Initialize Express app
@@ -33,7 +32,6 @@ app.get("/health", (req, res) => {
 });
 
 // Routes
-app.use("/", authRoutes);
 app.use("/", meetingRoutes);
 
 // Serve uploaded files
