@@ -1,0 +1,29 @@
+{
+  "meeting_id": "ES016007WB0H0",
+  "source_file": "ES2003a.Mix-Headset.wav",
+  "access_link": "http://localhost:3000/meeting/ES016007WB0H0",
+  "meeting_info": {
+    "title": "MissMonkey",
+    "date": "2026-03-01T00:00:00.000Z",
+    "duration_seconds": 1800,
+    "language": "en"
+  },
+  "participants": [
+    {
+      "user_id": "faa90367-3cd0-400f-9853-f2923662d47e",
+      "name": "aditya_verma@amicusglobal.com"
+    }
+  ],
+  "access_control": {
+    "allowed_users": [
+      "swapnil_singh@amicusglobal.com"
+    ]
+  },
+  "ingestion_info": {
+    "uploaded_by": "swapnil_singh@amicusglobal.com",
+    "uploaded_at": "2026-03-19T09:36:56.007Z",
+    "pipeline_version": "v2_whisper_chroma",
+    "pipeline_status": "done",
+    "chunks_count": 23
+  }
+}

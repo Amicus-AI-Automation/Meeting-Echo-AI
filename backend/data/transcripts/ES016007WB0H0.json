@@ -1,0 +1,324 @@
+[
+  {
+    "id": "ES016007WB0H0_chunk_0000",
+    "text": "Okay, well I think we're ready to begin, right? My name's Adam Duggard, we're here because of real reaction. We have in the group, Ebenezer at Demisoy, he's like his father, yeah, go for a minute. And he's Ed. And he's Ed. E-R. Ebenezer, and you're ruled as? I'm the marketing expert. You're the marketing expert, okay? Next we have Tariq Rammer, T-A-R-I-K, T-R-I-K, and your role in this is? Industrial designer, industrial designer. And lastly we have Dave Cochran, and you're going to be the user interface. Okay. Right, this is the agenda for today's meeting. As you can see, opening acquaintance, tool training, project plan, discussion, and closing. We already got through opening and partially through acquaintance.",
+    "start": 0.0,
+    "end": 75.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 0,
+      "total_chunks": 23,
+      "duration": 75.72,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0001",
+    "text": "Right, this is the agenda for today's meeting. As you can see, opening acquaintance, tool training, project plan, discussion, and closing. We already got through opening and partially through acquaintance. So, the reason we're here, we're going to design a new remote control, as you probably all know. Very broad overview is original, trendy, and user friendly. Of course, we'll have to go into a bit more detail in that. But, personally, I think that the original is going to be a very key aspect of this design. There's a lot of remote controls out there anyway, so we're going to need something that's really going to set it apart. This is how today seems to be going to work.",
+    "start": 61.72,
+    "end": 107.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 1,
+      "total_chunks": 23,
+      "duration": 46.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0002",
+    "text": "There's a lot of remote controls out there anyway, so we're going to need something that's really going to set it apart. This is how today seems to be going to work. Now, the three-k faces, as you've probably already been told, the functional conceptual and the detailed design. The first one is going to be covering the user requirements spec, technical functions, working design. The second seems to be conceptual components, properties, materials. And the last one is a detailed analysis of our design so far. Of course, you've all got the similar emails, I believe. What can I say? Every user? Do you want to draw your favourite animal? Sure. Whiteboard.",
+    "start": 95.72,
+    "end": 148.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 2,
+      "total_chunks": 23,
+      "duration": 53.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0003",
+    "text": "And the last one is a detailed analysis of our design so far. Of course, you've all got the similar emails, I believe. What can I say? Every user? Do you want to draw your favourite animal? Sure. Whiteboard. Okay, I'm going to make this quick since we don't have much time. Okay, so it's not the best picture in the world. Here we have an elephant. The first point begins with an E, same like a benesan. Also, elephants have a very good memory, much like myself. And I think that's what I'm going to do. So, elephants are big, strong and gentle, and they have great memories. And they begin with an E, same like a benesan.",
+    "start": 126.72,
+    "end": 227.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 3,
+      "total_chunks": 23,
+      "duration": 101.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0004",
+    "text": "And I think that's what I'm going to do. So, elephants are big, strong and gentle, and they have great memories. And they begin with an E, same like a benesan. Also, elephants have a very good memory, much like myself. And I can't remember that when I used to live in Nigeria, but I think I used to have a pet elephant. So, elephants are big, strong and gentle, and they have great memories. And they begin with an E, just like a benesan. Brilliantly done. Could you like to have a shot at a bit of artistry? Let's go on the way. Oh, you can clip them to your bell.",
+    "start": 215.72,
+    "end": 257.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 4,
+      "total_chunks": 23,
+      "duration": 42.00000000000003,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0005",
+    "text": "And they begin with an E, just like a benesan. Brilliantly done. Could you like to have a shot at a bit of artistry? Let's go on the way. Oh, you can clip them to your bell. Oh, I think you should also have your little bell mic on as well. Is it? Oh, that's good. We can clip them on. Okay. Yeah, there's this microphone as well, that's you. I'll put that on somewhere else. It's just a closer, that's it. Yep. Is this, what's the clip? Yeah, I'll follow you if you. There you go. You can probably just stick it in your pocket for now. I wouldn't worry too much, which is a good thing.",
+    "start": 242.72,
+    "end": 316.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 5,
+      "total_chunks": 23,
+      "duration": 74.00000000000003,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0006",
+    "text": "Yeah, I'll follow you if you. There you go. You can probably just stick it in your pocket for now. I wouldn't worry too much, which is a good thing. Yeah, I'm destroying around here. Yeah. Yeah. Yeah. Yeah. Yeah. It's good for it. Yeah. All right, here we have a tiger. Those love tigers. They're big, they're big as cats. They're a project on cats of the world and as a kid. And it was my favorite cat, just because it looks the best. The stripes are orange. My dad used to talk about it. He's from Bangladesh. So he used to tell me how bad the money was. That was a kid.",
+    "start": 301.72,
+    "end": 414.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 6,
+      "total_chunks": 23,
+      "duration": 113.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0007",
+    "text": "And it was my favorite cat, just because it looks the best. The stripes are orange. My dad used to talk about it. He's from Bangladesh. So he used to tell me how bad the money was. That was a kid. And they're just the most favorite of animals in the wild. So that's why they didn't say, and they met me really well. Excellent. Thank you very much. Dave, you like to have a dash? I don't know. I don't know. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. The monkey. Some water bleak reference, in fact, to my, I have a three-year-old daughter who is affectionately known as Miss Monkey.",
+    "start": 404.72,
+    "end": 575.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 7,
+      "total_chunks": 23,
+      "duration": 171.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0008",
+    "text": "Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. Yeah. The monkey. Some water bleak reference, in fact, to my, I have a three-year-old daughter who is affectionately known as Miss Monkey. Monkeys have attitude, which I think is a good thing. And from the point of view, the study of human evolution, they and other private are terribly interesting. I like monkeys. This one seems to have perhaps more attitude than most. Okay. Okay. Okay. Hardly what I call the best drawing in the world, but it will be for me. Also not quite as feared as your average tiger, but cats are one of my favourite animals. They're very independent. They're snotty as hell at the best of times.",
+    "start": 475.72,
+    "end": 670.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 8,
+      "total_chunks": 23,
+      "duration": 195.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0009",
+    "text": "Hardly what I call the best drawing in the world, but it will be for me. Also not quite as feared as your average tiger, but cats are one of my favourite animals. They're very independent. They're snotty as hell at the best of times. And what can you say? You've got all of those qualities in an animal. Right. I think we've all managed to master every whiteboard there by looks of it. On-set project finance, as you can see, 12.5 euros per unit. That's not a terrible lot as far as I'm aware. We're hoping to sell them for 25.",
+    "start": 629.72,
+    "end": 698.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 9,
+      "total_chunks": 23,
+      "duration": 69.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0010",
+    "text": "I think we've all managed to master every whiteboard there by looks of it. On-set project finance, as you can see, 12.5 euros per unit. That's not a terrible lot as far as I'm aware. We're hoping to sell them for 25. If we're aiming for 50 million euros, we're going to have to be selling an awful lot of them. Oh, that was a property. That was a month, so that's the month. Yeah. Well, 50 million, and if you're making 12.5 euros in each one, then awful lot need to be sold. Okay. Now we better actually just get on with the meat of the project. So I'm going to guess that we've all used remote controls.",
+    "start": 681.72,
+    "end": 730.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 10,
+      "total_chunks": 23,
+      "duration": 49.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0011",
+    "text": "Well, 50 million, and if you're making 12.5 euros in each one, then awful lot need to be sold. Okay. Now we better actually just get on with the meat of the project. So I'm going to guess that we've all used remote controls. Any ideas of where you think a new remote control could go into this market? Well, the thing I'm aware of is that there are a very high price end of the market. There are emerging markets that are touch screen LCD remote. There can be programmed in much more sophisticated ways than conventional models. So you can redesign the interface to your own needs. You can program in macros.",
+    "start": 711.72,
+    "end": 763.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 11,
+      "total_chunks": 23,
+      "duration": 52.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0012",
+    "text": "There are emerging markets that are touch screen LCD remote. There can be programmed in much more sophisticated ways than conventional models. So you can redesign the interface to your own needs. You can program in macros. And you get a much greater degree. When you get these sort of 3 and 1, 5, or whatever. But you can get integration between the different things that is designed to control to much greater extent. You can have one macro to turn the TV to the right channel. To rewind the tape and the VCR and get them to play what's this rewind, for instance.",
+    "start": 743.72,
+    "end": 791.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 12,
+      "total_chunks": 23,
+      "duration": 48.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0013",
+    "text": "You can have one macro to turn the TV to the right channel. To rewind the tape and the VCR and get them to play what's this rewind, for instance. It occurs to me there might be a niche for a remote that aimed towards some of that sort of functionality, but using a conventional push button design. And therefore putting it into a much lower price bracket. OK, that's true. With the price range we're looking at, going for a touch screen would probably be possible. Absolutely. But you think, again, something to control multiple units in a simple fashion. I mean, you get ones that you can switch between multiple units.",
+    "start": 777.72,
+    "end": 830.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 13,
+      "total_chunks": 23,
+      "duration": 53.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0014",
+    "text": "With the price range we're looking at, going for a touch screen would probably be possible. Absolutely. But you think, again, something to control multiple units in a simple fashion. I mean, you get ones that you can switch between multiple units. That's something that could operate between multiple units in a more integrated fashion. And ideally, something into which would you have some at least limited facility for running macros. Would it be ideal for something along the lines of one on button? Would turn on, say, the video recorded the TV, maybe the sound system as well on one go. For instance, I say, you press the play button for the DVD player.",
+    "start": 814.72,
+    "end": 865.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 14,
+      "total_chunks": 23,
+      "duration": 51.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0015",
+    "text": "Would turn on, say, the video recorded the TV, maybe the sound system as well on one go. For instance, I say, you press the play button for the DVD player. And it turns the TV on and on to the right channel as well. OK, that sounds like a good strong idea. Any takes, Nish? Well, I've noticed that gaming is becoming quite popular with television. When I was younger, we used to play games using the cable. Using the cable, subscribe to cable providers. But our remote controls get worn out really easily. And the remote control is not a great kind of keypad for playing games.",
+    "start": 848.72,
+    "end": 903.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 15,
+      "total_chunks": 23,
+      "duration": 55.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0016",
+    "text": "Using the cable, subscribe to cable providers. But our remote controls get worn out really easily. And the remote control is not a great kind of keypad for playing games. So perhaps one that was more specialized for a game playing or interactive television. They recently brought out this new remote control for people to sit their favorite channels to record things. Instead of people entering in what time things start, you simply slide a bar to say what time it begins and slide a level bar to say what time it ends. Yeah, I've heard I've seen the bar code design before, yeah. It's taken out the, you don't have to be really clever to use the remote control.",
+    "start": 889.72,
+    "end": 937.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 16,
+      "total_chunks": 23,
+      "duration": 48.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0017",
+    "text": "and slide a level bar to say what time it ends. Yeah, I've heard I've seen the bar code design before, yeah. It's taken out the, you don't have to be really clever to use the remote control. And I think the gaming, you want some big buttons for up, down, left, and right, shoot. You want to be able to change angles and interactive television. So you need buttons to change the television angle, the camera angles and stuff like that. Okay, well, we're beginning to run out of time now. So we've got a couple of ideas. We can, we'll have to work fast. All right, as you can see, we've got 30 minutes until the next meeting.",
+    "start": 924.72,
+    "end": 965.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 17,
+      "total_chunks": 23,
+      "duration": 41.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0018",
+    "text": "Okay, well, we're beginning to run out of time now. So we've got a couple of ideas. We can, we'll have to work fast. All right, as you can see, we've got 30 minutes until the next meeting. So we'll have to try and decide on some of the basic functionality. How the user interface might work. That'll be a key aspect, especially if the idea of some kind of macro facility, because you have to program it, you have to have a lot of response back, or at least some kind. And we're going to maybe try and have to figure out what the user wants. What the user wants, yes.",
+    "start": 952.72,
+    "end": 995.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 18,
+      "total_chunks": 23,
+      "duration": 43.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0019",
+    "text": "because you have to program it, you have to have a lot of response back, or at least some kind. And we're going to maybe try and have to figure out what the user wants. What the user wants, yes. Right, has anybody got anything they'd like to add at this stage? And if anything, that might have been missed so far. When you talk about gaming, do you think they should have some sort of stick on it, rather than weapons? Oh, okay, that's it. Like control of games, or is that a bit ridiculous? I don't see why not almost everybody's probably used to a console by now, and all of them incorporate small, deep pads on them.",
+    "start": 977.72,
+    "end": 1022.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 19,
+      "total_chunks": 23,
+      "duration": 45.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0020",
+    "text": "Like control of games, or is that a bit ridiculous? I don't see why not almost everybody's probably used to a console by now, and all of them incorporate small, deep pads on them. In fact, even the mobile phones these days are beginning to use them as well. So it's probably an interface that most people are used to. And that could allow easy navigation users as a joystick as well. I think maybe the other key feature that would be a good idea of building do is to make something fairly ergonomic. It fits as comfortably as possible into the hand.",
+    "start": 1010.72,
+    "end": 1059.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 20,
+      "total_chunks": 23,
+      "duration": 49.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0021",
+    "text": "I think maybe the other key feature that would be a good idea of building do is to make something fairly ergonomic. It fits as comfortably as possible into the hand. Of course, it also allows for the possibility of a more slightly unconventional, attractive shape for it overall. So, small, stylish, and something that's a little bit different, slightly sort of biomorphic and fun. Which it would need to be to sort of conform for the shape of the hand, more efficiently anyway. Okay, that's definitely something that we should be able to do quite easily. I would hope so anyway. Right. I'd say we finish this one up, we'll get started.",
+    "start": 1045.72,
+    "end": 1103.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 21,
+      "total_chunks": 23,
+      "duration": 58.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  },
+  {
+    "id": "ES016007WB0H0_chunk_0022",
+    "text": "Which it would need to be to sort of conform for the shape of the hand, more efficiently anyway. Okay, that's definitely something that we should be able to do quite easily. I would hope so anyway. Right. I'd say we finish this one up, we'll get started. I'll write up what we've kind of quickly done, and I'll get it out to everybody. Yeah, sure. Okay. Very good. As far as I'm aware, we leave the microphones here. Unless we're told otherwise, and we'll just take a laptop for us.",
+    "start": 1083.72,
+    "end": 1130.72,
+    "metadata": {
+      "meeting_id": "ES016007WB0H0",
+      "source": "ES2003a.Mix-Headset.wav",
+      "chunk_index": 22,
+      "total_chunks": 23,
+      "duration": 47.0,
+      "access_link": "http://localhost:3000/meeting/ES016007WB0H0"
+    }
+  }
+]

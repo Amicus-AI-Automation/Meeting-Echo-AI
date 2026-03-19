@@ -1,0 +1,21 @@
+/* ─────────────────────────────────────────
+   Dashboard layout - Light Theme
+───────────────────────────────────────── */
+.dashboard {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  background: #f8fafc;
+  color: #0f172a;
+  overflow: hidden;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+.dashboard-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+  background: #ffffff;
+}
