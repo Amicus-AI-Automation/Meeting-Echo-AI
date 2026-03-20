@@ -1,0 +1,30 @@
+{
+  "meeting_id": "ES0400903Y3G4",
+  "source_file": "ES2003a.Mix-Headset.wav",
+  "file_path": "C:\\Users\\Machine\\Desktop\\Adi_Project\\MeetingRAG\\backend\\uploads\\1774005039664-ebb296f7-8a0e-4310-8ac9-faa6e872cfe6.wav",
+  "meeting_info": {
+    "title": "Miss monkey",
+    "date": "2026-03-17T00:00:00.000Z",
+    "duration_seconds": 200,
+    "language": "en"
+  },
+  "participants": [
+    {
+      "user_id": "70657059-61e1-4ea4-bad6-2219aefddce9",
+      "name": "aditya_singh@amicusglobal.com"
+    }
+  ],
+  "access_control": {
+    "allowed_users": [
+      "nandini_singh@amicusglobal.com"
+    ]
+  },
+  "ingestion_info": {
+    "uploaded_by": "nandini_singh@amicusglobal.com",
+    "uploaded_at": "2026-03-20T11:10:40.090Z",
+    "pipeline_version": "v2_whisper_chroma",
+    "pipeline_status": "queued"
+  },
+  "createdAt": "2026-03-20T11:10:40.090Z",
+  "updatedAt": "2026-03-20T11:10:40.090Z"
+}

@@ -91,7 +91,7 @@ const getMeetingById = (meetingId) => {
 // ─────────────────────────────────────────
 // Get meetings by user
 // ─────────────────────────────────────────
-const getMeetingsByUser = (userEmail) => {
+const getMeetingsByUser = (userEmail, userRole) => {
   try {
     const files = fs.readdirSync(DATA_DIR).filter(f => f.endsWith(".json"));
     const meetings = [];
@@ -107,7 +107,9 @@ const getMeetingsByUser = (userEmail) => {
 
         // Add the new is_allowed and can_delete flags
         meeting.is_allowed = (isInAllowedUsers || isUploader || isParticipant);
-        meeting.can_delete = isUploader; // Only the uploader can delete for now (can expand to admins)
+        
+        // Only the uploader can delete, and only if they have the admin role
+        meeting.can_delete = isUploader && userRole === "admin";
         
         meetings.push(meeting);
       } catch (e) {

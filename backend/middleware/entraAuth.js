@@ -120,25 +120,27 @@ function verifyAndAttach(token, jwk, req, res, next) {
     }
   }
 
+  const role = req.headers["x-user-role"] === "admin" ? "admin" : "user";
+  
   // Attach user info (matches what meetingController reads as req.user.email)
   req.user = {
     email: verified.preferred_username || verified.upn || verified.email || verified.unique_name || "",
     name: verified.name || "",
     oid: verified.oid || "",
+    role: role,
   };
 
-  console.log(`Entra auth verified for user: ${req.user.email}`);
+  console.log(`Entra auth verified for user: ${req.user.email} (Role: ${role})`);
 
   // ── Persist / update user in MongoDB (fire-and-forget, non-blocking) ──
   try {
     const User = require("../models/User");
-    const role = req.headers["x-user-role"] === "admin" ? "admin" : "user";
     User.findOneAndUpdate(
       { email: req.user.email },
       {
         email: req.user.email,
         name: req.user.name,
-        role,
+        role: req.user.role,
         oid: req.user.oid,
         last_login: new Date(),
       },

@@ -83,20 +83,18 @@ function Sidebar({ meetings, selectedMeeting, onSelectMeeting, openUpload, onLog
                 {m.is_allowed && (
                   <div className="meeting-right-actions">
                     {statusIcon(m.pipeline_status)}
-                    <button 
-                      className="btn-delete-meeting" 
-                      onClick={(e) => { 
-                        e.stopPropagation(); 
-                        if (!m.can_delete) {
-                          alert("you are not the admin of this meeting so you are not allowed to delete this meeting");
-                          return;
-                        }
-                        if(window.confirm('Delete this meeting? This will also stop any active processing.')) onDeleteMeeting(m.meeting_id); 
-                      }} 
-                      title="Delete meeting"
-                    >
-                      🗑️
-                    </button>
+                    {isAdmin && m.can_delete && (
+                      <button 
+                        className="btn-delete-meeting" 
+                        onClick={(e) => { 
+                          e.stopPropagation(); 
+                          if(window.confirm('Delete this meeting? This will also stop any active processing.')) onDeleteMeeting(m.meeting_id); 
+                        }} 
+                        title="Delete meeting"
+                      >
+                        🗑️
+                      </button>
+                    )}
                   </div>
                 )}
               </div>

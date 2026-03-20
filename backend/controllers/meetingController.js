@@ -234,9 +234,10 @@ const queryMeeting = async (req, res) => {
 const getMeetings = async (req, res) => {
   try {
     const email = req.user?.email;
-    console.log(`📊 Get meetings request from: ${email}`);
+    const role = req.user?.role || "user";
+    console.log(`📊 Get meetings request from: ${email} (Role: ${role})`);
 
-    const meetings = jsonStorage.getMeetingsByUser(email);
+    const meetings = jsonStorage.getMeetingsByUser(email, role);
 
     res.status(200).json({
       success: true,
@@ -319,9 +320,16 @@ const deleteMeeting = async (req, res) => {
     }
 
     const isUploader = meeting.ingestion_info?.uploaded_by === email;
+    const isAdmin = req.user?.role === "admin";
 
-    if (!isUploader) {
-      return res.status(403).json({ message: "you are not the admin of this meeting so you are not allowed to delete this meeting" });
+    if (!isUploader || !isAdmin) {
+      const reason = !isAdmin 
+        ? "you are not an admin" 
+        : "you are not the admin (uploader) of this meeting";
+      return res.status(403).json({ 
+        message: `you are not allowed to delete this meeting because ${reason}`,
+        success: false
+      });
     }
 
     // Call Python API to cancel job (best-effort)
