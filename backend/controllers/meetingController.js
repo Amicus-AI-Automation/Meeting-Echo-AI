@@ -16,7 +16,7 @@ const uploadMeeting = async (req, res) => {
     const email = req.user?.email;
     const file = req.file;
 
-    console.log(`📥 Meeting upload request from: ${email}`);
+    console.log(`Meeting upload request from: ${email}`);
 
     // Validate inputs
     if (!title || !title.trim()) {
@@ -93,7 +93,7 @@ const uploadMeeting = async (req, res) => {
       },
     });
 
-    console.log(`✅ Meeting record saved: ${meeting.meeting_id}`);
+    console.log(`Meeting record saved: ${meeting.meeting_id}`);
 
     // ── Mirror meeting to MongoDB (fire-and-forget) ──
     MeetingModel.findOneAndUpdate(

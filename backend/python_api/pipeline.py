@@ -9,39 +9,39 @@ job_status: dict = {}
 
 def run_pipeline(meeting_id: str, file_path: str, metadata: dict):
     try:
-        job_status[meeting_id] = {"status": "processing", "message": "Extracting audio…"}
+        job_status[meeting_id] = {"status": "processing", "message": "Extracting audio..."}
         print(f"\n{'='*50}")
-        print(f"🚀 Starting pipeline for {meeting_id}")
+        print(f"Starting pipeline for {meeting_id}")
 
         file_ext = Path(file_path).suffix.lower()
         wav_path = str(TRANSCRIPTS_DIR / f"{meeting_id}.wav")
 
         if file_ext in [".mp4", ".mov", ".avi", ".mkv"]:
-            job_status[meeting_id]["message"] = "Extracting audio from video…"
+            job_status[meeting_id]["message"] = "Extracting audio from video..."
             audio_path = extract_audio_from_video(file_path, wav_path)
         else:
             audio_path = file_path
 
-        job_status[meeting_id]["message"] = "Loading audio…"
+        job_status[meeting_id]["message"] = "Loading audio..."
         try:
             audio = load_audio(audio_path)
         except Exception as e:
             raise RuntimeError(f"Could not load audio: {e}")
 
-        job_status[meeting_id]["message"] = "Transcribing with Whisper (this may take a while)…"
+        job_status[meeting_id]["message"] = "Transcribing with Whisper (this may take a while)..."
         segments = transcribe_audio(audio)
-        print(f"📝 Transcribed {len(segments)} segments")
+        print(f"Transcribed {len(segments)} segments")
 
-        job_status[meeting_id]["message"] = "Chunking transcript…"
+        job_status[meeting_id]["message"] = "Chunking transcript..."
         chunks = chunk_segments(segments, metadata)
-        print(f"📦 Created {len(chunks)} chunks")
+        print(f"Created {len(chunks)} chunks")
 
         transcript_path = TRANSCRIPTS_DIR / f"{meeting_id}.json"
         with open(transcript_path, "w", encoding="utf-8") as f:
             json.dump(chunks, f, indent=2)
-        print(f"💾 Transcript saved → {transcript_path}")
+        print(f"Transcript saved -> {transcript_path}")
 
-        job_status[meeting_id]["message"] = "Generating embeddings & storing in ChromaDB…"
+        job_status[meeting_id]["message"] = "Generating embeddings & storing in ChromaDB..."
         if chunks:
             embed_and_store(chunks, meeting_id)
 
@@ -68,15 +68,15 @@ def run_pipeline(meeting_id: str, file_path: str, metadata: dict):
                     }},
                 )
                 client.close()
-                print(f"📊 MongoDB meeting status updated → done")
+                print(f"MongoDB meeting status updated -> done")
             except Exception as mongo_err:
-                print(f"⚠️ MongoDB pipeline sync skipped: {mongo_err}")
+                print(f"MongoDB pipeline sync skipped: {mongo_err}")
 
         job_status[meeting_id] = {"status": "done", "message": f"Pipeline complete. {len(chunks)} chunks indexed."}
-        print(f"🎉 Pipeline done for {meeting_id}")
+        print(f"Pipeline done for {meeting_id}")
 
     except Exception as e:
         import traceback
         traceback.print_exc()
         job_status[meeting_id] = {"status": "error", "message": str(e)}
-        print(f"❌ Pipeline error for {meeting_id}: {e}")
+        print(f"Pipeline error for {meeting_id}: {e}")

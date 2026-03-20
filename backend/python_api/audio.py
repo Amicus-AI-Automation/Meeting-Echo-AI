@@ -21,9 +21,9 @@ def extract_audio_from_video(video_path: str, out_wav: str) -> str:
         if result.returncode == 0:
             return out_wav
     except FileNotFoundError:
-        print("⚠️  ffmpeg not found — trying direct audio load")
+        print("ffmpeg not found - trying direct audio load")
     except Exception as e:
-        print(f"⚠️  ffmpeg error: {e}")
+        print(f"ffmpeg error: {e}")
 
     # fallback: try soundfile directly
     return video_path

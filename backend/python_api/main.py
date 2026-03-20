@@ -45,9 +45,9 @@ def process_meeting(req: ProcessRequest, background_tasks: BackgroundTasks):
     meta_path = METADATA_DIR / f"{meeting_id}.json"
     with open(meta_path, "w", encoding="utf-8") as f:
         json.dump(req.metadata, f, indent=2)
-    print(f"📋 Metadata saved → {meta_path}")
+    print(f"Metadata saved -> {meta_path}")
 
-    job_status[meeting_id] = {"status": "queued", "message": "Job queued, starting soon…"}
+    job_status[meeting_id] = {"status": "queued", "message": "Job queued, starting soon..."}
     background_tasks.add_task(run_pipeline, meeting_id, req.file_path, req.metadata)
 
     return {"meeting_id": meeting_id, "status": "queued", "message": "Processing started in background"}

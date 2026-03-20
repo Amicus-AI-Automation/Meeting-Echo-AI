@@ -23,7 +23,7 @@ async function run() {
   const files = fs.readdirSync(RECORDS_DIR).filter(f => f.endsWith(".json"));
   if (files.length === 0) return;
 
-  console.log(`\n🔄 MongoDB migration: syncing ${files.length} existing JSON record(s)…`);
+  console.log(`\nMongoDB migration: syncing ${files.length} existing JSON record(s)...`);
   let synced = 0;
   let skipped = 0;
 
@@ -56,15 +56,15 @@ async function run() {
         { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
       );
 
-      console.log(`   ✅ Synced: ${meetingId}`);
+      console.log(`   Synced: ${meetingId}`);
       synced++;
     } catch (err) {
-      console.warn(`   ⚠️ Skipped ${file}: ${err.message}`);
+      console.warn(`   Skipped ${file}: ${err.message}`);
       skipped++;
     }
   }
 
-  console.log(`🔄 Migration done — ${synced} synced, ${skipped} skipped.\n`);
+  console.log(`Migration done - ${synced} synced, ${skipped} skipped.\n`);
 }
 
 module.exports = { run };

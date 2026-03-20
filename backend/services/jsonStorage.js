@@ -51,7 +51,7 @@ const saveMeeting = (meetingData) => {
 
     // 1. Save to backend/data/{meetingId}.json (Node storage)
     fs.writeFileSync(meetingPath, JSON.stringify(meeting, null, 2));
-    console.log(`💾 Meeting record saved: ${meetingPath}`);
+    console.log(`Meeting record saved: ${meetingPath}`);
 
     // 2. Save to data/metadata/{meetingId}.json (Python pipeline reads this)
     const metaPath = path.join(METADATA_DIR, `${meetingId}.json`);
@@ -65,7 +65,7 @@ const saveMeeting = (meetingData) => {
       ingestion_info: meetingData.ingestion_info,
     };
     fs.writeFileSync(metaPath, JSON.stringify(pythonMeta, null, 2));
-    console.log(`📋 Metadata saved for Python: ${metaPath}`);
+    console.log(`Metadata saved for Python: ${metaPath}`);
 
     return meeting;
   } catch (err) {
@@ -146,7 +146,7 @@ const deleteMeeting = (meetingId) => {
     const filePath = path.join(DATA_DIR, `${meetingId}.json`);
     if (fs.existsSync(filePath)) {
       fs.unlinkSync(filePath);
-      console.log(`🗑️ Meeting deleted: ${meetingId}`);
+      console.log(`Meeting deleted: ${meetingId}`);
       return true;
     }
     return false;

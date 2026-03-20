@@ -26,7 +26,7 @@ def embed_and_store(chunks: list, meeting_id: str):
             existing = collection.get()
             if existing["ids"]:
                 collection.delete(ids=existing["ids"])
-                print(f"🗑️  Cleared old chunks for collection meeting_{meeting_id}")
+                print(f"Cleared old chunks for collection meeting_{meeting_id}")
         except Exception:
             pass
 
@@ -50,7 +50,7 @@ def embed_and_store(chunks: list, meeting_id: str):
         documents=documents,
         metadatas=metadatas
     )
-    print(f"✅ Stored {len(chunks)} chunks in ChromaDB")
+    print(f"Stored {len(chunks)} chunks in ChromaDB")
 
 def query_collection(query_embedding: list, meeting_id: str, n_results: int = 15):
     collection = get_collection(meeting_id)

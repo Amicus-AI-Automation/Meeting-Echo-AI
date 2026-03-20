@@ -127,7 +127,7 @@ function verifyAndAttach(token, jwk, req, res, next) {
     oid: verified.oid || "",
   };
 
-  console.log(`✅ Entra auth verified for user: ${req.user.email}`);
+  console.log(`Entra auth verified for user: ${req.user.email}`);
 
   // ── Persist / update user in MongoDB (fire-and-forget, non-blocking) ──
   try {
@@ -143,7 +143,7 @@ function verifyAndAttach(token, jwk, req, res, next) {
         last_login: new Date(),
       },
       { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
-    ).catch((err) => console.warn("⚠️ MongoDB user upsert failed:", err.message));
+    ).catch((err) => console.warn("MongoDB user upsert failed:", err.message));
   } catch (e) {
     // mongoose may not be connected — silently skip
   }

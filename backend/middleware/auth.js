@@ -15,7 +15,7 @@ const authMiddleware = (req, res, next) => {
     // Verify JWT token
     const decoded = jwt.verify(token, process.env.JWT_SECRET || "your_jwt_secret");
     req.user = decoded;
-    console.log(`✅ Auth verified for user: ${decoded.email}`);
+    console.log(`Auth verified for user: ${decoded.email}`);
 
     next();
   } catch (error) {

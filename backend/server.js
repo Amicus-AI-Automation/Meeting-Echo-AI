@@ -30,7 +30,7 @@ app.use(
 app.get("/health", (req, res) => {
   res.status(200).json({
     message: "Server is running",
-    status: "✅ MeetingRAG Backend Ready",
+    status: "MeetingRAG Backend Ready",
     storage: "JSON files in backend/data + MongoDB",
     python_api: process.env.PYTHON_API_URL || "http://localhost:8001",
     timestamp: new Date(),
@@ -69,10 +69,10 @@ app.use((req, res) => {
 // Start server
 app.listen(PORT, () => {
   console.log(`\n${"=".repeat(60)}`);
-  console.log(`🚀 Node.js Server  → http://localhost:${PORT}`);
-  console.log(`🐍 Python API      → ${process.env.PYTHON_API_URL || "http://localhost:8001"}`);
-  console.log(`📁 Uploads         : ./uploads`);
-  console.log(`📊 Storage         : JSON + MongoDB`);
+  console.log(`Node.js Server  -> http://localhost:${PORT}`);
+  console.log(`Python API      -> ${process.env.PYTHON_API_URL || "http://localhost:8001"}`);
+  console.log(`Uploads         : ./uploads`);
+  console.log(`Storage         : JSON + MongoDB`);
   console.log(`${"=".repeat(60)}\n`);
 });
 

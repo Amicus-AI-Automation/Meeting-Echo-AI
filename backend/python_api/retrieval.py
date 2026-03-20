@@ -1,7 +1,10 @@
 from embedding import get_embeddings
 from vector_db import query_collection
-from config import GROQ_API_KEY
 from local_llm import ask_llm
+import os
+
+SIMILARITY_THRESHOLD = float(os.getenv("RAG_SIMILARITY_THRESHOLD", 1.4))
+NO_INFO_MESSAGE = "there is no information about this topic discussed in the meeting"
 
 def format_time(seconds: float) -> str:
     seconds = int(seconds)
@@ -19,10 +22,9 @@ def generate_answer(context: str, query: str, meeting_title: str) -> str:
 
 Rules:
 - Read the provided transcript fragments below carefully.
-- Try to answer the user's question by synthesizing the information you have.
-- If the exact answer isn't fully clear, provide the closest relevant information discussed.
-- If it's completely missing and unrelated to anything discussed, politely say you don't have that information.
-
+- Answer the user's question ONLY using the provided context.
+- If the answer is not in the context, your entire response MUST be: "there is no information about this topic discussed in the meeting"
+- DO NOT use outside knowledge. DO NOT guess or hallucinate.
 
 Meeting: {meeting_title}
 
@@ -50,12 +52,16 @@ def retrieve_and_answer(query: str, meeting_id: str, metadata: dict) -> dict:
 
     docs = results.get("documents", [[]])[0]
     metas = results.get("metadatas", [[]])[0]
+    distances = results.get("distances", [[]])[0]
 
     meeting_title = metadata.get("meeting_info", {}).get("title", "")
 
-    if not docs:
+    # Filter by threshold (ChromaDB L2 distance: lower is better)
+    filtered_indices = [i for i, dist in enumerate(distances) if dist <= SIMILARITY_THRESHOLD]
+    
+    if not filtered_indices:
         return {
-            "answer": "No relevant content found in this meeting transcript.",
+            "answer": NO_INFO_MESSAGE,
             "sources": [],
             "meeting_id": meeting_id,
             "meeting_title": meeting_title
@@ -63,7 +69,11 @@ def retrieve_and_answer(query: str, meeting_id: str, metadata: dict) -> dict:
 
     context_parts = []
     sources = []
-    for doc, meta in zip(docs, metas):
+    
+    for i in filtered_indices:
+        doc = docs[i]
+        meta = metas[i]
+        dist = distances[i]
         start = meta.get("start", 0)
         end = meta.get("end", 0)
         ts = f"[{format_time(start)} – {format_time(end)}]"
