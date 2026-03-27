@@ -101,7 +101,7 @@ function UploadMeeting({ onClose }) {
         },
       });
 
-      setSuccess(`✓ Meeting "${res.data.meeting.meeting_info.title}" uploaded successfully! 🎉`);
+      setSuccess(`Meeting "${res.data.meeting.meeting_info.title}" uploaded successfully!`);
       setTimeout(() => {
         resetForm();
         onClose(res.data.meeting);
@@ -202,7 +202,7 @@ function UploadMeeting({ onClose }) {
               onChange={(e) => setFile(e.target.files[0])}
               disabled={loading}
             />
-            {file && <p className="file-info">📄 {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)</p>}
+            {file && <p className="file-info">File: {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)</p>}
           </div>
 
           <div className="form-group">

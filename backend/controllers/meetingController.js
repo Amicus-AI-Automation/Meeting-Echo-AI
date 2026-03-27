@@ -7,9 +7,8 @@ const MeetingModel = require("../models/Meeting");
 // Python FastAPI microservice URL
 const PYTHON_API_URL = process.env.PYTHON_API_URL || "http://localhost:8000";
 
-// ─────────────────────────────────────────
+
 // UPLOAD MEETING
-// ─────────────────────────────────────────
 const uploadMeeting = async (req, res) => {
   try {
     const { title, date, durationSeconds, language = "en", participants, allowedUsers } = req.body;
@@ -95,7 +94,7 @@ const uploadMeeting = async (req, res) => {
 
     console.log(`Meeting record saved: ${meeting.meeting_id}`);
 
-    // ── Mirror meeting to MongoDB (fire-and-forget) ──
+    //  Mirror meeting to MongoDB (fire-and-forget)
     MeetingModel.findOneAndUpdate(
       { meeting_id: meeting.meeting_id },
       {
@@ -108,7 +107,7 @@ const uploadMeeting = async (req, res) => {
         ingestion_info: meeting.ingestion_info,
       },
       { upsert: true, returnDocument: 'after', setDefaultsOnInsert: true }
-    ).catch((err) => console.warn("⚠️ MongoDB meeting upsert failed:", err.message));
+    ).catch((err) => console.warn(" MongoDB meeting upsert failed:", err.message));
 
     // Respond immediately so the user isn't waiting
     res.status(201).json({
@@ -126,9 +125,9 @@ const uploadMeeting = async (req, res) => {
       },
     });
 
-    // ── Trigger Python pipeline (fire-and-forget) ──
+    //  Trigger Python pipeline (fire-and-forget)
     triggerPipeline(meeting).catch(err => {
-      console.error(`❌ Failed to trigger pipeline for ${meeting.meeting_id}:`, err.message);
+      console.error(` Failed to trigger pipeline for ${meeting.meeting_id}:`, err.message);
     });
 
   } catch (error) {
@@ -141,9 +140,8 @@ const uploadMeeting = async (req, res) => {
 };
 
 
-// ─────────────────────────────────────────
+
 // Fire pipeline on Python API
-// ─────────────────────────────────────────
 async function triggerPipeline(meeting) {
   const payload = {
     meeting_id: meeting.meeting_id,
@@ -159,21 +157,20 @@ async function triggerPipeline(meeting) {
     },
   };
 
-  console.log(`🐍 Triggering Python pipeline for ${meeting.meeting_id} …`);
+  console.log(` Triggering Python pipeline for ${meeting.meeting_id} …`);
   const response = await axios.post(`${PYTHON_API_URL}/process`, payload, { timeout: 10000 });
-  console.log(`🐍 Python API response:`, response.data);
+  console.log(` Python API response:`, response.data);
 }
 
 
-// ─────────────────────────────────────────
+
 // QUERY MEETING (RAG)
-// ─────────────────────────────────────────
 const queryMeeting = async (req, res) => {
   try {
     const email = req.user?.email;
     const { query, meeting_id } = req.body;
 
-    console.log(`🔍 Query from: ${email} | meeting: ${meeting_id} | query: "${query}"`);
+    console.log(` Query from: ${email} | meeting: ${meeting_id} | query: "${query}"`);
 
     if (!query || !query.trim()) {
       return res.status(400).json({ message: "Query is required" });
@@ -227,15 +224,12 @@ const queryMeeting = async (req, res) => {
   }
 };
 
-
-// ─────────────────────────────────────────
 // GET MEETINGS (list for user)
-// ─────────────────────────────────────────
 const getMeetings = async (req, res) => {
   try {
     const email = req.user?.email;
     const role = req.user?.role || "user";
-    console.log(`📊 Get meetings request from: ${email} (Role: ${role})`);
+    console.log(`Get meetings request from: ${email} (Role: ${role})`);
 
     const meetings = jsonStorage.getMeetingsByUser(email, role);
 
@@ -264,9 +258,7 @@ const getMeetings = async (req, res) => {
 };
 
 
-// ─────────────────────────────────────────
 // GET PIPELINE STATUS
-// ─────────────────────────────────────────
 const getPipelineStatus = async (req, res) => {
   try {
     const { meeting_id } = req.params;
@@ -306,9 +298,7 @@ const getPipelineStatus = async (req, res) => {
 };
 
 
-// ─────────────────────────────────────────
 // DELETE MEETING
-// ─────────────────────────────────────────
 const deleteMeeting = async (req, res) => {
   try {
     const { meeting_id } = req.params;

@@ -74,7 +74,7 @@ function ChatUI({ meeting }) {
                 clearInterval(statusIntervalRef.current);
                 statusIntervalRef.current = null;
               }
-            } catch (e) {}
+            } catch (e) { }
           }, 5000);
         }
       }
@@ -82,7 +82,7 @@ function ChatUI({ meeting }) {
       // status endpoint might not exist or Python API down — ignore
     }
   };
-  
+
   const terminateChat = () => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -150,7 +150,7 @@ function ChatUI({ meeting }) {
         setError("⏳ Meeting is still being transcribed. Please wait and try again.");
         checkPipelineStatus();
       } else if (status === 503) {
-        setError("⚠️ AI service is offline. Please ensure the Python API is running on port 8000.");
+        setError("AI service is offline. Please ensure the Python API is running on port 8000.");
       } else {
         setError(msg);
       }
@@ -190,12 +190,12 @@ function ChatUI({ meeting }) {
 
     const bannerClass =
       status === "error" ? "pipeline-banner error" :
-      status === "processing" ? "pipeline-banner processing" :
-      "pipeline-banner queued";
+        status === "processing" ? "pipeline-banner processing" :
+          "pipeline-banner queued";
 
     const icon =
-      status === "error" ? "❌" :
-      status === "processing" ? "⚙️" : "🕐";
+      status === "error" ? "X" :
+        status === "processing" ? "..." : "Wait";
 
     return (
       <div className={bannerClass}>
@@ -212,7 +212,7 @@ function ChatUI({ meeting }) {
     return (
       <div className="chat-ui-container">
         <div className="empty-state">
-          <div className="empty-icon">🎙️</div>
+          <div className="empty-icon"></div>
           <h2>No Meeting Selected</h2>
           <p>Upload or select a meeting from the sidebar to start asking questions.</p>
         </div>
@@ -225,17 +225,17 @@ function ChatUI({ meeting }) {
       {/* Header */}
       <div className="chat-header">
         <div className="meeting-title-section">
-          <h2>📞 {meeting.title}</h2>
+          <h2>{meeting.title}</h2>
           <div className="meeting-details">
-            <span className="detail-item">👥 {meeting.participants_count} participant{meeting.participants_count !== 1 ? "s" : ""}</span>
-            <span className="detail-item">⏱️ {Math.floor(meeting.duration_seconds / 60)} min</span>
-            <span className="detail-item">📅 {new Date(meeting.date).toLocaleDateString()}</span>
+            <span className="detail-item">Participants: {meeting.participants_count}</span>
+            <span className="detail-item">Duration: {Math.floor(meeting.duration_seconds / 60)} min</span>
+            <span className="detail-item">Date: {new Date(meeting.date).toLocaleDateString()}</span>
             {meeting.pipeline_status && (
               <span className={`detail-item status-badge status-${meeting.pipeline_status}`}>
-                {meeting.pipeline_status === "done" ? "✅ Indexed" :
-                 meeting.pipeline_status === "processing" ? "⚙️ Processing" :
-                 meeting.pipeline_status === "queued" ? "🕐 Queued" :
-                 meeting.pipeline_status === "error" ? "❌ Error" : "📋 " + meeting.pipeline_status}
+                {meeting.pipeline_status === "done" ? "Indexed" :
+                  meeting.pipeline_status === "processing" ? "Processing" :
+                    meeting.pipeline_status === "queued" ? "Queued" :
+                      meeting.pipeline_status === "error" ? "Error" : meeting.pipeline_status}
               </span>
             )}
           </div>

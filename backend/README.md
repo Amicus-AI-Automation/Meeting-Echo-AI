@@ -17,11 +17,11 @@ MONGODB_URI=mongodb://localhost:27017/meeting-rag
 # JWT Configuration
 JWT_SECRET=your_super_secret_jwt_key_change_this_in_production
 
-# Email Configuration (Gmail)
-EMAIL_SERVICE=gmail
-EMAIL_USER=your-email@gmail.com
-EMAIL_PASSWORD=your_app_password_here
-# For Gmail: Generate an App Password at https://myaccount.google.com/apppasswords
+
+# Entra ID (Microsoft) Configuration
+AZURE_TENANT_ID=your-tenant-id-here
+AZURE_CLIENT_ID=your-client-id-here
+AZURE_CLIENT_SECRET=your-client-secret-here
 
 # CORS Configuration
 CORS_ORIGIN=http://localhost:3000
@@ -49,12 +49,12 @@ npm install
 4. Get connection string
 5. Update `MONGODB_URI` in `.env`
 
-### 3. Email Service Setup (Gmail)
 
-1. Go to https://myaccount.google.com/apppasswords
-2. Select "Mail" and "Windows Computer" (or your device)
-3. Generate an app password
-4. Copy the 16-character password to `EMAIL_PASSWORD` in `.env`
+### 3. Entra ID (Microsoft) Setup
+
+1. Register your app in Azure Portal (Entra ID)
+2. Set AZURE_TENANT_ID, AZURE_CLIENT_ID, AZURE_CLIENT_SECRET in your .env
+3. Configure frontend MSAL in `frontend/src/authConfig.js`
 
 ### 4. Start the Server
 
@@ -72,16 +72,9 @@ Server will run on `http://localhost:5000`
 
 ## API Endpoints
 
-### Authentication
-- **POST** `/send-otp` - Send OTP to email
-  ```json
-  { "email": "user@example.com" }
-  ```
 
-- **POST** `/verify-otp` - Verify OTP
-  ```json
-  { "email": "user@example.com", "otp": "123456" }
-  ```
+### Authentication
+Authentication is handled via Microsoft Entra ID (MSAL). All API endpoints require a valid Bearer token from Entra ID login.
 
 ### Meetings (requires JWT token in Authorization header)
 - **POST** `/upload-meeting` - Upload meeting file
@@ -114,10 +107,9 @@ The API returns proper HTTP status codes:
 - Verify `MONGODB_URI` is correct
 - Check firewall/network access
 
-### Email Not Sending
-- Verify Gmail app password is correct
-- Enable "Less secure app access" if not using App Passwords
-- Check email service configuration in `config/email.js`
+
+### Entra ID/MSAL Issues
+- Check your tenant ID, client ID, and secret in .env and frontend config
 
 ### Port Already in Use
 - Change `PORT` in `.env` or kill process using port 5000:
@@ -129,8 +121,6 @@ The API returns proper HTTP status codes:
 
 ## Development Notes
 
-- OTPs expire after 10 minutes
-- OTP requests are rate-limited to 1 per minute
 - JWT tokens expire after 7 days
 - Files are stored in `/uploads` directory (must exist)
 - Maximum file size: 500MB

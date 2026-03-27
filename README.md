@@ -1,309 +1,145 @@
-# MeetingRAG - Meeting Intelligence Assistant
 
-A full-stack web application that enables users to upload meeting recordings and ask intelligent questions about them using a Chat UI. Built with React frontend and Node.js/Express backend with MongoDB persistence.
+# Meeting-Echo-AI (MeetingRAG)
 
-## Features
+Unified platform for meeting audio upload, transcription, semantic search, and chat, with a Node.js/Express backend, Python API for AI features, and a React frontend with Microsoft Entra ID authentication.
 
-- **Email-based OTP Authentication** - Secure login via one-time passwords
-- **Meeting Upload** - Upload meeting files (MP4, WAV) with participant information
-- **Chat Interface** - Ask questions about uploaded meetings
-- **Real-time Notifications** - Get email notifications for meetings
-- **Persistent Storage** - All meetings and user data stored in MongoDB
-- **Production-Ready** - Error handling, validation, CORS, rate limiting
+---
 
 ## Project Structure
 
 ```
-MeetingRAG/
-├── frontend/                 # React application
+Meeting-Echo-AI/
+├── backend/           # Node.js/Express API, MongoDB, JSON storage, Python API integration
+│   ├── python_api/    # FastAPI Python service for audio, transcription, embeddings
+│   ├── ...            # Controllers, routes, models, services, uploads, etc.
+├── frontend/          # React app (MSAL/Entra ID, chat, dashboard, upload)
 │   ├── src/
-│   │   ├── components/      # Reusable UI components
-│   │   │   ├── Login.js
-│   │   │   ├── OTPVerify.js
-│   │   │   ├── ChatUI.js
-│   │   │   ├── Sidebar.js
-│   │   │   ├── UploadMeeting.js
-│   │   │   └── [CSS files]
-│   │   ├── pages/
-│   │   │   └── Dashboard.js
-│   │   ├── services/
-│   │   │   └── api.js       # Axios configuration with Bearer auth
-│   │   ├── App.js
-│   │   └── index.js
-│   ├── package.json
-│   └── .env
-│
-└── backend/                  # Express.js API
-    ├── models/              # MongoDB schemas
-    │   ├── User.js
-    │   └── Meeting.js
-    ├── routes/              # API endpoints
-    │   ├── auth.js         # OTP login endpoints
-    │   └── meeting.js      # Meeting management endpoints
-    ├── controllers/         # Business logic
-    │   ├── authController.js
-    │   └── meetingController.js
-    ├── middleware/
-    │   └── auth.js         # JWT verification
-    ├── config/
-    │   ├── mongodb.js
-    │   └── email.js
-    ├── uploads/            # Meeting file storage
-    ├── server.js
-    ├── package.json
-    ├── .env
-    └── README.md
+│   │   ├── components/  # ChatUI, Sidebar, UploadMeeting, etc.
+│   │   ├── pages/       # Dashboard, LoginPage
+│   │   ├── services/    # api.js (API integration)
+│   │   └── App.js
+│   └── ...
+├── requirements_python.txt  # Python dependencies for backend/python_api
+└── ...
 ```
-
-## Quick Start
-
-### Prerequisites
-- Node.js (v14+)
-- npm or yarn
-- MongoDB (local or MongoDB Atlas)
-- Gmail account (for OTP emails) or compatible email service
-
-### 1. Clone & Setup
-
-```bash
-# Clone the repository (if applicable)
-git clone <repo-url>
-cd MeetingRAG
-
-# Install frontend dependencies
-cd frontend
-npm install
-
-# Install backend dependencies
-cd ../backend
-npm install
-```
-
-### 2. Configure Environment Variables
-
-**Backend (.env)**
-```bash
-cd backend
-
-# Copy .env.example to .env
-cp .env.example .env
-
-# Edit .env with your values:
-# - MONGODB_URI (local or MongoDB Atlas)
-# - EMAIL_USER and EMAIL_PASSWORD (Gmail app password)
-# - JWT_SECRET (any secure string)
-```
-
-**Frontend (.env)**
-```bash
-cd ../frontend
-
-# Already configured with REACT_APP_API_URL=http://localhost:5000
-# Modify if backend runs on different port
-```
-
-### 3. Setup Email Service (Gmail)
-
-1. Go to [Gmail App Passwords](https://myaccount.google.com/apppasswords)
-2. Select "Mail" and "Windows Computer"
-3. Generate app password → 16 character password
-4. Paste into backend `.env` as `EMAIL_PASSWORD`
-
-### 4. Setup MongoDB
-
-**Option A: Local MongoDB**
-```bash
-# Install MongoDB
-# Default: mongodb://localhost:27017/meeting-rag
-```
-
-**Option B: MongoDB Atlas (Recommended)**
-1. Create free account at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
-2. Create cluster → Get connection string
-3. Update `MONGODB_URI` in backend `.env`
-
-### 5. Start Servers
-
-**Terminal 1 - Backend**
-```bash
-cd backend
-npm run dev
-# Runs on http://localhost:5000
-```
-
-**Terminal 2 - Frontend**
-```bash
-cd frontend
-npm start
-# Runs on http://localhost:3000
-```
-
-## User Flow
-
-1. **Login** → User enters email → Backend sends OTP via Gmail
-2. **OTP Verification** → User enters OTP → Backend generates JWT token
-3. **Dashboard** → User sees Chat UI and Sidebar
-4. **Upload Meeting** → User clicks "Upload Meeting" → Upload file + add participants
-5. **Query** → User asks questions → Backend returns answers (placeholder for RAG)
-
-## API Endpoints
-
-### Authentication
-| Method | Endpoint | Body | Response |
-|--------|----------|------|----------|
-| POST | `/send-otp` | `{ email }` | OTP sent |
-| POST | `/verify-otp` | `{ email, otp }` | `{ token }` |
-
-### Meetings (Requires Bearer token)
-| Method | Endpoint | Body | Response |
-|--------|----------|------|----------|
-| POST | `/upload-meeting` | FormData: `file`, `meetingName`, `participants` | Meeting created |
-| POST | `/query` | `{ query }` | `{ answer }` |
-| GET | `/meetings` | - | List of meetings |
-
-## Testing the Application
-
-### Test OTP Flow
-```bash
-# 1. Go to http://localhost:3000
-# 2. Enter your email
-# 3. Check Gmail inbox for OTP
-# 4. Enter OTP to verify
-# 5. Should be logged in to Dashboard
-```
-
-### Test Meeting Upload
-```bash
-# 1. Click "Upload Meeting"
-# 2. Enter meeting name
-# 3. Upload a file (mp4/wav)
-# 4. Add participant emails
-# 5. Click Upload
-# 6. Should see success message
-```
-
-### Test Chat Query
-```bash
-# 1. Type a message in Chat UI
-# 2. Click Send
-# 3. Should receive response from backend
-```
-
-## Development
-
-### Enable Development Email Logging
-In `backend/controllers/authController.js`, OTP codes are logged to console in development mode:
-```
-[DEV] OTP for user@example.com: 123456
-Use this for testing without email setup
-```
-
-### Troubleshooting
-
-**MongoDB Connection Failed**
-- Check if MongoDB is running: `mongod`
-- Verify `MONGODB_URI` format
-- Check firewall/VPN blocks
-
-**Email Not Sending**
-- Verify Gmail app password (not regular password)
-- Check `EMAIL_USER` and `EMAIL_PASSWORD` in `.env`
-- Enable "Less secure app access" or use App Passwords
-
-**CORS Errors**
-- Ensure `CORS_ORIGIN=http://localhost:3000` in backend `.env`
-- Frontend and backend running on correct ports
-
-**Port Already in Use**
-```bash
-# Find process using port 5000
-netstat -ano | findstr :5000
-
-# Kill process
-taskkill /PID <PID> /F
-```
-
-## MongoDB Schema
-
-### User Collection
-```json
-{
-  "_id": ObjectId,
-  "email": "user@example.com",
-  "isVerified": true,
-  "otp": {
-    "code": null,
-    "expiresAt": null
-  },
-  "meetings": [ObjectId],
-  "createdAt": ISODate,
-  "updatedAt": ISODate
-}
-```
-
-### Meeting Collection
-```json
-{
-  "_id": ObjectId,
-  "meeting_id": "M12345678",
-  "meeting_name": "Salary Discussion",
-  "file_path": "/uploads/meeting.mp4",
-  "file_name": "meeting.mp4",
-  "file_size": 52428800,
-  "participants": [
-    {
-      "email": "user1@company.com",
-      "id": "uuid-123"
-    }
-  ],
-  "created_by": ObjectId,
-  "createdAt": ISODate,
-  "updatedAt": ISODate
-}
-```
-
-## Security
-
-- **JWT Authentication** - 7-day expiry
-- **Email OTP** - 10-minute expiry, 1-minute rate limit
-- **Password Validation** - Email format checking
-- **File Upload Validation** - Type and size limits
-- **CORS Protection** - Whitelist frontend origin
-- **Error Handling** - Generic error messages to prevent info leakage
-
-## Production Deployment
-
-### Frontend (Vercel, Netlify)
-```bash
-npm run build
-# Deploy build/ folder
-```
-
-### Backend (Heroku, Railway, Render)
-```bash
-# Set environment variables in hosting platform
-# Push code to git → Auto-deploy
-```
-
-## Dependencies
-
-**Frontend**
-- React 19
-- Axios
-- React Router
-- UUID
-
-**Backend**
-- Express.js
-- Mongoose
-- JWT
-- Multer (file uploads)
-- Nodemailer (emails)
-
-## License
-
-ISC
 
 ---
 
-For detailed backend setup, see [backend/README.md](backend/README.md)
+## Backend Setup
+
+### 1. Environment Variables
+Copy `backend/README.md`'s .env template and fill in:
+```
+PORT=5000
+NODE_ENV=development
+MONGODB_URI=mongodb://localhost:27017/meeting-rag
+JWT_SECRET=your_super_secret_jwt_key
+AZURE_TENANT_ID=your-tenant-id-here
+AZURE_CLIENT_ID=your-client-id-here
+AZURE_CLIENT_SECRET=your-client-secret-here
+CORS_ORIGIN=http://localhost:3000
+```
+
+### 2. Install Dependencies
+```bash
+cd backend
+npm install
+```
+
+### 3. MongoDB Setup
+- Local: Install MongoDB and run on default port
+- Atlas: Use your connection string in `MONGODB_URI`
+
+### 4. Start Backend
+```bash
+node server.js
+# or use: npm start
+```
+
+### 5. Python API Setup
+```bash
+cd backend/python_api
+# Create venv and activate (Windows):
+python -m venv venv
+venv\Scripts\activate
+# Install requirements:
+pip install -r ../../requirements_python.txt
+# Start API:
+uvicorn main:app --reload --port 8000
+```
+
+---
+
+## Frontend Setup
+
+### 1. Environment Variables
+Configure MSAL/Entra ID in `frontend/src/authConfig.js` and `.env` if needed.
+
+### 2. Install Dependencies
+```bash
+cd frontend
+npm install
+```
+
+### 3. Start Frontend
+```bash
+npm start
+# App runs at http://localhost:3000
+```
+
+---
+
+## Code Functionality
+
+### Backend (Node.js/Express)
+- **server.js**: Entry point, connects to MongoDB, sets up Express, CORS, health check, and meeting routes.
+- **controllers/meetingController.js**: Handles meeting CRUD, file upload, triggers Python API for transcription/embedding.
+- **routes/meeting.js**: API endpoints for meetings (upload, list, search, chat).
+- **models/**: Mongoose schemas for Meeting and User.
+- **services/jsonStorage.js**: Reads/writes meeting data to JSON files.
+- **python_api/**: FastAPI app for audio extraction, transcription (Whisper), embeddings (sentence-transformers), vector DB (ChromaDB).
+
+**Typical flow:**
+1. User uploads meeting audio via frontend.
+2. Backend saves file, calls Python API for transcription/embedding.
+3. Data stored in MongoDB and/or JSON files.
+4. User can search or chat with meeting content via API.
+
+### Frontend (React)
+- **src/App.js**: Handles authentication (MSAL/Entra ID), routes to LoginPage or Dashboard.
+- **src/pages/**: `LoginPage.js` (login UI), `Dashboard.js` (main app UI).
+- **src/components/**: `ChatUI.js` (chat interface), `Sidebar.js` (meeting list), `UploadMeeting.js` (file upload).
+- **src/services/api.js**: Handles API requests to backend.
+
+**Typical flow:**
+1. User logs in with Microsoft account.
+2. Uploads meeting audio, sees list of meetings.
+3. Can chat with meeting content (semantic search, Q&A).
+
+---
+
+## Example API Usage
+
+**Health Check:**
+```
+GET http://localhost:5000/health
+```
+
+**Upload Meeting:**
+```
+POST http://localhost:5000/api/meetings/upload
+Content-Type: multipart/form-data
+Body: { audio file }
+```
+
+**Chat/Search:**
+```
+POST http://localhost:5000/api/meetings/chat
+Body: { meetingId, question }
+```
+
+
+## License
+
+MIT
+

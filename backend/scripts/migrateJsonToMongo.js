@@ -1,14 +1,3 @@
-/**
- * migrateJsonToMongo.js
- * ─────────────────────────────────────────────────────────
- * Reads every JSON record in backend/data/records/ and upserts
- * it into the MongoDB `meetings` collection.
- * Also reads the corresponding metadata file to get the
- * final pipeline_status and chunks_count (which may differ).
- *
- * Safe to run multiple times — uses upsert, never duplicates.
- * Called automatically on server startup (after Mongo connects).
- */
 
 const fs   = require("fs");
 const path = require("path");

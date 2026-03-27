@@ -23,7 +23,7 @@ async function getJwks() {
   return jwksCache;
 }
 
-// ── Middleware ─────────────────────────────────────────────
+// Middleware 
 const entraAuth = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
@@ -55,7 +55,7 @@ const entraAuth = async (req, res, next) => {
 
     const jwk = keys.find((k) => k.kid === kid);
     if (!jwk) {
-      // kid mismatch — force JWKS refresh and retry once
+      // If mismatch — force JWKS refresh and retry once
       jwksCache = null;
       try {
         const freshKeys = await getJwks();

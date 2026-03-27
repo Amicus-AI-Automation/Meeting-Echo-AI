@@ -4,7 +4,6 @@ import { MsalProvider } from '@azure/msal-react';
 import { msalInstance } from './authConfig';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 
 msalInstance.initialize().then(() => {
   const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -16,8 +15,3 @@ msalInstance.initialize().then(() => {
     </React.StrictMode>
   );
 });
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

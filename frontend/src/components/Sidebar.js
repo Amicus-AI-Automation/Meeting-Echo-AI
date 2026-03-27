@@ -3,11 +3,11 @@ import "./Sidebar.css";
 
 const statusIcon = (status) => {
   switch (status) {
-    case "done":       return <span className="s-badge s-done"    title="Indexed">✓</span>;
-    case "processing": return <span className="s-badge s-proc"    title="Processing…">⚙</span>;
-    case "queued":     return <span className="s-badge s-queue"   title="Queued">·</span>;
-    case "error":      return <span className="s-badge s-err"     title="Error">!</span>;
-    default:           return null;
+    case "done": return <span className="s-badge s-done" title="Indexed">✓</span>;
+    case "processing": return <span className="s-badge s-proc" title="Processing…">⚙</span>;
+    case "queued": return <span className="s-badge s-queue" title="Queued">·</span>;
+    case "error": return <span className="s-badge s-err" title="Error">!</span>;
+    default: return null;
   }
 };
 
@@ -84,12 +84,12 @@ function Sidebar({ meetings, selectedMeeting, onSelectMeeting, openUpload, onLog
                   <div className="meeting-right-actions">
                     {statusIcon(m.pipeline_status)}
                     {isAdmin && m.can_delete && (
-                      <button 
-                        className="btn-delete-meeting" 
-                        onClick={(e) => { 
-                          e.stopPropagation(); 
-                          if(window.confirm('Delete this meeting? This will also stop any active processing.')) onDeleteMeeting(m.meeting_id); 
-                        }} 
+                      <button
+                        className="btn-delete-meeting"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (window.confirm('Delete this meeting? This will also stop any active processing.')) onDeleteMeeting(m.meeting_id);
+                        }}
                         title="Delete meeting"
                       >
                         🗑️

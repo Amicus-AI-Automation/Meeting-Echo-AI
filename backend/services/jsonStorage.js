@@ -2,12 +2,8 @@ const fs = require("fs");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 
-// ─────────────────────────────────────────
 // Directories
-// ─────────────────────────────────────────
-// ─────────────────────────────────────────
-// Directories
-// ─────────────────────────────────────────
+
 // Node.js backend/data/records — meeting JSON records
 const DATA_DIR = path.join(__dirname, "../data/records");
 // backend/data/metadata — shared with Python pipeline
@@ -20,18 +16,14 @@ const METADATA_DIR = path.join(__dirname, "../data/metadata");
   }
 });
 
-// ─────────────────────────────────────────
 // Helpers
-// ─────────────────────────────────────────
 const generateMeetingId = () => {
   const timestamp = Date.now().toString().slice(-6);
   const random = Math.random().toString(36).substring(2, 7).toUpperCase();
   return `ES${timestamp}${random}`;
 };
 
-// ─────────────────────────────────────────
 // Save meeting
-// ─────────────────────────────────────────
 const saveMeeting = (meetingData) => {
   try {
     const meetingId = generateMeetingId();
@@ -74,9 +66,7 @@ const saveMeeting = (meetingData) => {
   }
 };
 
-// ─────────────────────────────────────────
 // Get meeting by ID
-// ─────────────────────────────────────────
 const getMeetingById = (meetingId) => {
   try {
     const filePath = path.join(DATA_DIR, `${meetingId}.json`);
@@ -88,9 +78,7 @@ const getMeetingById = (meetingId) => {
   }
 };
 
-// ─────────────────────────────────────────
 // Get meetings by user
-// ─────────────────────────────────────────
 const getMeetingsByUser = (userEmail, userRole) => {
   try {
     const files = fs.readdirSync(DATA_DIR).filter(f => f.endsWith(".json"));
@@ -124,9 +112,7 @@ const getMeetingsByUser = (userEmail, userRole) => {
   }
 };
 
-// ─────────────────────────────────────────
 // Get all meetings (admin / query use)
-// ─────────────────────────────────────────
 const getAllMeetings = () => {
   try {
     const files = fs.readdirSync(DATA_DIR).filter(f => f.endsWith(".json"));
@@ -140,9 +126,7 @@ const getAllMeetings = () => {
   }
 };
 
-// ─────────────────────────────────────────
 // Delete meeting
-// ─────────────────────────────────────────
 const deleteMeeting = (meetingId) => {
   try {
     const filePath = path.join(DATA_DIR, `${meetingId}.json`);

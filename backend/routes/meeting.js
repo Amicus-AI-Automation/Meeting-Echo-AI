@@ -13,9 +13,8 @@ const authMiddleware = require("../middleware/entraAuth");
 
 const router = express.Router();
 
-// ─────────────────────────────────────────
+
 // Multer config
-// ─────────────────────────────────────────
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.join(__dirname, "../uploads"));
@@ -47,10 +46,7 @@ const upload = multer({
   limits: { fileSize: 500 * 1024 * 1024 }, // 500 MB
 });
 
-// ─────────────────────────────────────────
 // Routes
-// ─────────────────────────────────────────
-
 // Upload a meeting file → triggers Python pipeline
 router.post("/upload-meeting", authMiddleware, upload.single("file"), uploadMeeting);
 
